@@ -190,7 +190,7 @@ For support and questions:
 
 ---
 
-**Note**: This system uses \`stacks-block-height\` instead of \`block-height\` for Stacks blockchain compatibility.
+**Note**: This system uses \`block-height\` instead of \`block-height\` for Stacks blockchain compatibility.
 \`\`\`
 
 Finally, let's create the PR details:

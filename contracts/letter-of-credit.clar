@@ -62,7 +62,7 @@
     (manager principal))
     (let ((lc-id (+ (var-get lc-counter) u1)))
         (asserts! (is-lc-manager-verified manager) ERR_MANAGER_NOT_VERIFIED)
-        (asserts! (> expiry-date stacks-block-height) ERR_LC_EXPIRED)
+        (asserts! (> expiry-date block-height) ERR_LC_EXPIRED)
         (asserts! (> amount u0) ERR_INSUFFICIENT_FUNDS)
 
         (map-set letters-of-credit lc-id {
@@ -73,7 +73,7 @@
             currency: currency,
             expiry-date: expiry-date,
             status: STATUS_DRAFT,
-            created-at: stacks-block-height,
+            created-at: block-height,
             manager: manager
         })
 
@@ -87,7 +87,7 @@
     (let ((lc (unwrap! (map-get? letters-of-credit lc-id) ERR_INVALID_LC)))
         (asserts! (is-eq tx-sender (get issuing-bank lc)) ERR_UNAUTHORIZED)
         (asserts! (is-eq (get status lc) STATUS_DRAFT) ERR_INVALID_STATUS)
-        (asserts! (> (get expiry-date lc) stacks-block-height) ERR_LC_EXPIRED)
+        (asserts! (> (get expiry-date lc) block-height) ERR_LC_EXPIRED)
 
         (map-set letters-of-credit lc-id (merge lc {status: STATUS_ISSUED}))
         (ok true)
@@ -98,7 +98,7 @@
 (define-public (confirm-letter-of-credit (lc-id uint))
     (let ((lc (unwrap! (map-get? letters-of-credit lc-id) ERR_INVALID_LC)))
         (asserts! (is-eq (get status lc) STATUS_ISSUED) ERR_INVALID_STATUS)
-        (asserts! (> (get expiry-date lc) stacks-block-height) ERR_LC_EXPIRED)
+        (asserts! (> (get expiry-date lc) block-height) ERR_LC_EXPIRED)
 
         (map-set letters-of-credit lc-id (merge lc {status: STATUS_CONFIRMED}))
         (ok true)
@@ -110,7 +110,7 @@
     (let ((lc (unwrap! (map-get? letters-of-credit lc-id) ERR_INVALID_LC)))
         (asserts! (is-eq tx-sender (get beneficiary lc)) ERR_UNAUTHORIZED)
         (asserts! (or (is-eq (get status lc) STATUS_ISSUED) (is-eq (get status lc) STATUS_CONFIRMED)) ERR_INVALID_STATUS)
-        (asserts! (> (get expiry-date lc) stacks-block-height) ERR_LC_EXPIRED)
+        (asserts! (> (get expiry-date lc) block-height) ERR_LC_EXPIRED)
 
         (map-set lc-documents lc-id documents)
         (map-set letters-of-credit lc-id (merge lc {status: STATUS_DOCUMENTS_PRESENTED}))

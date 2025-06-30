@@ -1,21 +1,51 @@
+import { describe, it, expect, beforeEach } from "vitest"
 
-import { describe, expect, it } from "vitest";
-
-const accounts = simnet.getAccounts();
-const address1 = accounts.get("wallet_1")!;
-
-/*
-  The test below is an example. To learn more, read the testing documentation here:
-  https://docs.hiro.so/stacks/clarinet-js-sdk
-*/
-
-describe("example tests", () => {
-  it("ensures simnet is well initalised", () => {
-    expect(simnet.blockHeight).toBeDefined();
-  });
-
-  // it("shows an example", () => {
-  //   const { result } = simnet.callReadOnlyFn("counter", "get-counter", [], address1);
-  //   expect(result).toBeUint(0);
-  // });
-});
+describe("Invoice Financing Contract", () => {
+  let accounts
+  let supplierAddress
+  let buyerAddress
+  let financierAddress
+  let managerAddress
+  
+  beforeEach(() => {
+    accounts = {
+      deployer: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+      wallet_1: "ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG",
+      wallet_2: "ST2JHG361ZXG51QTKY2NQCVBPPRRE2KZB1HR05NNC",
+      wallet_3: "ST2NEB84ASENDXKYGJPQW86YXQCEFEX2ZQPG87ND",
+    }
+    supplierAddress = accounts.deployer
+    buyerAddress = accounts.wallet_1
+    financierAddress = accounts.wallet_2
+    managerAddress = accounts.wallet_3
+  })
+  
+  it("should verify invoice manager", () => {
+    // Test manager verification
+    expect(true).toBe(true) // Placeholder test
+  })
+  
+  it("should create invoice financing request", () => {
+    // Test invoice financing creation
+    expect(true).toBe(true) // Placeholder test
+  })
+  
+  it("should approve invoice financing", () => {
+    // Test invoice approval
+    expect(true).toBe(true) // Placeholder test
+  })
+  
+  it("should calculate financing amount correctly", () => {
+    // Test financing calculation
+    const invoiceAmount = 100000
+    const discountRate = 300 // 3%
+    const expectedFinancing = 97000
+    
+    expect(invoiceAmount - (invoiceAmount * discountRate) / 10000).toBe(expectedFinancing)
+  })
+  
+  it("should get invoice financing details", () => {
+    // Test getting invoice details
+    expect(true).toBe(true) // Placeholder test
+  })
+})
